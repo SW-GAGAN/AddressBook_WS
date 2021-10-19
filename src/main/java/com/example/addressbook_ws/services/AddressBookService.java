@@ -13,5 +13,6 @@ public interface AddressBookService {
 
     public Contact updateContact(Contact contact);
 
+    public Contact deleteContact(long parseLong);
 }
 

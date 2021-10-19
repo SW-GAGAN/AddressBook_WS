@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -12,18 +13,30 @@ class IAddressBookService implements AddressBookService {
 
     List<Contact> list;
 
+    //creating list of contacts
     public IAddressBookService() {
         list = new ArrayList<>();
-        list.add(new Contact( "Gagan",121, "Heelalige", "Bangalore", "Karnataka", "872289619", 560099));
-        list.add(new Contact( "Shravya", 231,"Hosur", "channai", "Tamilnadu", "7019329791", 526879));
-        list.add(new Contact( "Swaroop", 341,"rajendranagar","Delhi","Delhi", "9901014451", 856974 ));
+        list.add(new Contact("Gagan", 121, "Heelalige", "Bangalore", "Karnataka", "872289619", 560099));
+        list.add(new Contact("Shravya", 231, "Hosur", "channai", "Tamilnadu", "7019329791", 526879));
+        list.add(new Contact("Swaroop", 341, "rajendranagar", "Delhi", "Delhi", "9901014451", 856974));
     }
 
+    /**
+     * getcontacts from contact list
+     *
+     * @return Contacts
+     */
     @Override
     public List<Contact> getContacts() {
         return list;
     }
 
+    /**
+     * geting contacts by Id in contact list
+     *
+     * @param contactId
+     * @return
+     */
     @Override
     public Contact getContacts(long contactId) {
         Contact c = null;
@@ -36,6 +49,12 @@ class IAddressBookService implements AddressBookService {
         return c;
     }
 
+    /**
+     * Adding contacts in to the list
+     *
+     * @param contact
+     * @return contact list
+     */
     @Override
     public Contact addContact(Contact contact) {
         list.add(contact);
@@ -43,6 +62,12 @@ class IAddressBookService implements AddressBookService {
 
     }
 
+    /**
+     * update contacts in the contact list
+     *
+     * @param contact
+     * @return
+     */
     @Override
     public Contact updateContact(Contact contact) {
         list.forEach(e -> {
@@ -59,4 +84,9 @@ class IAddressBookService implements AddressBookService {
         return contact;
     }
 
+    @Override
+    public Contact deleteContact(long parseLong) {
+        list = this.list.stream().filter(e -> e.getId() != parseLong).collect(Collectors.toList());
+    return null;
+    }
 }
