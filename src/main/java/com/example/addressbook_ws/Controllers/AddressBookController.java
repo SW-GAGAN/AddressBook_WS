@@ -3,6 +3,8 @@ package com.example.addressbook_ws.Controllers;
 import com.example.addressbook_ws.model.Contact;
 import com.example.addressbook_ws.services.AddressBookService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -57,7 +59,13 @@ public class AddressBookController {
         return this.addressBookService.updateContact(contact);
     }
 
-
-
-
+    @DeleteMapping("/contact/{contactId}")
+    public ResponseEntity<HttpStatus> deleteContact(@PathVariable long contactId){
+        try{
+            this.addressBookService.deleteContact(Long.parseLong(String.valueOf(contactId)));
+            return new ResponseEntity<>(HttpStatus.OK);
+                    }catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }
